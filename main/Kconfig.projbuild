@@ -1,0 +1,94 @@
+menu "ESP32_WIFI_ONEWIRE_MQTT Project Configuration"
+
+    config ESP_WIFI_SSID
+        string "WiFi SSID"
+        default "Wi-Fi_name"
+        help
+            SSID (network name) for the example to connect to.
+
+    config ESP_WIFI_PASSWORD
+        string "WiFi Password"
+        default "Wi-Fi_password"
+        help
+            WiFi password (WPA or WPA2) for the example to use.
+
+    choice ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD
+        prompt "WiFi Scan auth mode threshold"
+        default ESP_WIFI_AUTH_WPA2_PSK
+        help
+            The weakest authmode to accept in the scan mode.
+            This value defaults to ESP_WIFI_AUTH_WPA2_PSK incase password is present and ESP_WIFI_AUTH_OPEN is used.
+            Please select ESP_WIFI_AUTH_WEP/ESP_WIFI_AUTH_WPA_PSK incase AP is operating in WEP/WPA mode.
+
+        config ESP_WIFI_AUTH_OPEN
+            bool "OPEN"
+        config ESP_WIFI_AUTH_WEP
+            bool "WEP"
+        config ESP_WIFI_AUTH_WPA_PSK
+            bool "WPA PSK"
+        config ESP_WIFI_AUTH_WPA2_PSK
+            bool "WPA2 PSK"
+        config ESP_WIFI_AUTH_WPA_WPA2_PSK
+            bool "WPA/WPA2 PSK"
+        config ESP_WIFI_AUTH_WPA3_PSK
+            bool "WPA3 PSK"
+        config ESP_WIFI_AUTH_WPA2_WPA3_PSK
+            bool "WPA2/WPA3 PSK"
+        config ESP_WIFI_AUTH_WAPI_PSK
+            bool "WAPI PSK"
+    endchoice
+
+    config BROKER_URL
+        string "Broker URL"
+        default "mqtt://mqtt.eclipseprojects.io"
+        help
+            URL of the broker to connect to.
+
+    config BROKER_PORT
+        int "Broker Server Port"
+        default 1883
+        help
+            Server Port of the broker to connect to.
+
+    config BROKER_TOPIC_PREFIX
+        string "Broker Topic Prefix"
+        default "ESP32_WIFI_ONEWIRE_MQTT"
+        help
+            The MQTT topic name starting with prefix.
+
+    config ONEWIRE_DATA_GPIO_PIN
+        int "GPIO pin for DS18B20 device DATA bus"
+        range 0 39
+        default 5
+        help
+            Select the GPIO pin that is connected to the DS18B20 device DATA bus.
+            This pin is used for data communication between the device and the microcontroller.
+    
+    config ONEWIRE_NUMBER_OF_DEVICES
+        int "Number of DS18B20 devices"
+        range 1 128
+        default 1
+        help
+            Specify the number of DS18B20 temperature devices that are connected to the DATA bus.
+
+    config ONEWIRE_TEMPERATURE_UPDATE_TIME
+        int "Update time for DS18B20 devices in seconds"
+        default 2
+        help
+            Specify the update time for DS18B20 temperature devices in seconds.
+
+    config FREERTOS_USE_TRACE_FACILITY
+        bool "Enable trace facility"
+        default y
+        help
+            Enables additional structure members and functions to assist with execution visualization and tracing
+            (see configUSE_TRACE_FACILITY documentation for more details).
+
+    config FREERTOS_GENERATE_RUN_TIME_STATS
+        bool "Enable trace facility"
+        default y
+        help
+            Enables collection of run time statistics for each task
+            (see configGENERATE_RUN_TIME_STATS documentation for more details).
+
+endmenu
